@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keywords Generator - Lead Scraper</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-10%, -10%) scale(1.1); }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .glass-effect-strong {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .keyword-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .keyword-item:hover {
+            transform: translateX(8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .keyword-number {
+            min-width: 2.5rem;
+            text-align: center;
+        }
+
+        .copy-success {
+            animation: flash-green 0.6s ease-in-out;
+        }
+
+        @keyframes flash-green {
+            0% { background-color: rgba(34, 197, 94, 0.3); }
+            50% { background-color: rgba(34, 197, 94, 0.5); }
+            100% { background-color: transparent; }
+        }
+
+        .btn-primary {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        input, select {
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            background: rgba(255, 255, 255, 0.25) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .banner-link {
+            transition: all 0.3s ease;
+        }
+
+        .banner-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="gradient-bg min-h-screen flex flex-col">
+        <!-- Header -->
+        <nav class="glass-effect-strong py-5 px-6 sticky top-0 z-50">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-white flex items-center">
+                    <div class="bg-white bg-opacity-20 p-2 rounded-xl mr-3">
+                        <i class="fas fa-lightbulb text-2xl"></i>
+                    </div>
+                    <span class="hidden md:inline">Keywords AI</span>
+                    <span class="text-yellow-300 ml-2 text-sm font-normal hidden lg:inline">Generator</span>
+                </h1>
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <a href="/settings.html" class="glass-effect px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center">
+                        <i class="fas fa-cog mr-2"></i>
+                        <span class="hidden sm:inline">Settings</span>
+                    </a>
+                    <a href="/" class="glass-effect px-4 py-2 rounded-lg text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center">
+                        <i class="fas fa-search mr-2"></i>
+                        <span class="hidden sm:inline">Search</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Top Banner -->
+        <div class="bg-gradient-to-r from-purple-700 via-blue-700 to-indigo-800 py-4 px-4 shadow-2xl">
+            <div class="container mx-auto flex flex-wrap justify-center items-center gap-3 md:gap-6">
+                <a href="https://www.facebook.com/aiunlockedvip" target="_blank" class="banner-link flex items-center bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-full shadow-lg">
+                    <i class="fab fa-facebook-f mr-2 text-lg"></i>
+                    <span class="text-sm font-medium">ติดต่อแอดมิน</span>
+                </a>
+                <a href="https://selljung.com/" target="_blank" class="banner-link flex items-center bg-green-600 hover:bg-green-500 text-white px-5 py-2.5 rounded-full shadow-lg">
+                    <i class="fas fa-graduation-cap mr-2 text-lg"></i>
+                    <span class="text-sm font-medium">คอร์สอื่นๆ</span>
+                </a>
+                <a href="https://www.youtube.com/@AIUnlocked168" target="_blank" class="banner-link flex items-center bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 rounded-full shadow-lg">
+                    <i class="fab fa-youtube mr-2 text-lg"></i>
+                    <span class="text-sm font-medium">ติดตาม Youtube</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container mx-auto px-4 py-10 max-w-6xl flex-grow relative z-10">
+            <!-- Hero Section -->
+            <div class="text-center mb-8 fade-in">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-3 drop-shadow-lg">
+                    สร้างคำค้นหาด้วย AI
+                </h2>
+                <p class="text-white text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
+                    ระบบสร้างคำค้นหาที่เกี่ยวข้องอัตโนมัติด้วย Google Gemini AI
+                </p>
+            </div>
+
+            <!-- Input Section -->
+            <div class="glass-effect-strong rounded-2xl p-6 md:p-10 mb-8 shadow-2xl fade-in">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-white bg-opacity-20 p-4 rounded-full">
+                        <i class="fas fa-magic text-white text-3xl"></i>
+                    </div>
+                </div>
+
+                <form id="keywordsForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="md:col-span-1">
+                            <label class="block text-white mb-2 font-semibold text-sm uppercase tracking-wide">
+                                <i class="fas fa-key mr-2"></i>คำหลัก
+                            </label>
+                            <input type="text" id="keyword" class="w-full px-5 py-4 rounded-xl bg-white bg-opacity-20 text-white placeholder-gray-300 border border-white border-opacity-30 focus:outline-none focus:border-white text-base" placeholder="เช่น: คลินิกเสริมความงาม" required>
+                        </div>
+                        <div>
+                            <label class="block text-white mb-2 font-semibold text-sm uppercase tracking-wide">
+                                <i class="fas fa-list-ol mr-2"></i>จำนวนคำ
+                            </label>
+                            <select id="count" class="w-full px-5 py-4 rounded-xl bg-white bg-opacity-20 text-white border border-white border-opacity-30 focus:outline-none focus:border-white text-base cursor-pointer">
+                                <option value="10" class="bg-purple-800">10 คำ</option>
+                                <option value="20" selected class="bg-purple-800">20 คำ</option>
+                                <option value="30" class="bg-purple-800">30 คำ</option>
+                                <option value="50" class="bg-purple-800">50 คำ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white mb-2 font-semibold text-sm uppercase tracking-wide">
+                                <i class="fas fa-briefcase mr-2"></i>ประเภทธุรกิจ (ไม่บังคับ)
+                            </label>
+                            <input type="text" id="businessType" class="w-full px-5 py-4 rounded-xl bg-white bg-opacity-20 text-white placeholder-gray-300 border border-white border-opacity-30 focus:outline-none focus:border-white text-base" placeholder="เช่น: ร้านอาหาร, คลินิก">
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-8">
+                        <button type="submit" id="generateBtn" class="btn-primary bg-gradient-to-r from-white to-gray-100 text-purple-700 px-12 py-4 rounded-full font-bold text-lg hover:shadow-2xl transform transition-all duration-300 relative z-10">
+                            <i class="fas fa-magic mr-3"></i>สร้างคำค้นหา
+                        </button>
+                        <p class="text-white text-sm mt-4 opacity-75">
+                            <i class="fas fa-info-circle mr-1"></i>AI จะสร้างคำค้นหาที่เกี่ยวข้องให้อัตโนมัติ
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsContainer" class="hidden fade-in">
+                <div class="glass-effect-strong rounded-2xl p-6 md:p-8 mb-6 shadow-2xl">
+                    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
+                        <div>
+                            <h3 class="text-3xl font-bold text-white mb-2">
+                                <i class="fas fa-list mr-3"></i>คำค้นหาที่สร้างแล้ว
+                            </h3>
+                            <p id="resultsSummary" class="text-white text-lg opacity-90"></p>
+                        </div>
+                        <div class="flex flex-wrap gap-3">
+                            <button id="copyAllBtn" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <i class="fas fa-copy mr-2"></i>Copy ทั้งหมด
+                            </button>
+                            <button id="exportBtn" class="bg-green-600 hover:bg-green-500 text-white px-5 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                                <i class="fas fa-download mr-2"></i>Export .txt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keywords List -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div id="keywordsList"></div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="hidden text-center py-16 fade-in">
+                <div class="glass-effect-strong inline-block p-8 rounded-2xl">
+                    <div class="loading-spinner mx-auto mb-6"></div>
+                    <p class="text-white text-2xl font-semibold mb-2">กำลังสร้างคำค้นหาด้วย AI...</p>
+                    <p class="text-white text-base opacity-75">โปรดรอสักครู่ Gemini กำลังประมวลผล</p>
+                </div>
+            </div>
+
+            <!-- Status Message -->
+            <div id="statusMessage" class="mt-6 hidden">
+                <div class="glass-effect-strong rounded-2xl p-6">
+                    <p id="statusText" class="text-white text-center text-lg"></p>
+                </div>
+            </div>
+
+            <!-- Examples Section -->
+            <div class="glass-effect-strong rounded-2xl p-6 md:p-8 mt-8">
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">
+                    <i class="fas fa-lightbulb mr-3"></i>ตัวอย่างคำค้นหา
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-white">
+                    <div class="glass-effect rounded-xl p-5 hover:bg-white hover:bg-opacity-15 transition-all duration-300">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-pink-500 bg-opacity-30 p-2 rounded-lg mr-3">
+                                <i class="fas fa-spa text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-lg">ความงาม & สุขภาพ</h4>
+                        </div>
+                        <ul class="text-sm space-y-2 opacity-90 ml-2">
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>คลินิกเสริมความงาม</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>สปาเพื่อสุขภาพ</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>ศูนย์ความงามครบวงจร</li>
+                        </ul>
+                    </div>
+                    <div class="glass-effect rounded-xl p-5 hover:bg-white hover:bg-opacity-15 transition-all duration-300">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-orange-500 bg-opacity-30 p-2 rounded-lg mr-3">
+                                <i class="fas fa-utensils text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-lg">อาหาร & ร้านอาหาร</h4>
+                        </div>
+                        <ul class="text-sm space-y-2 opacity-90 ml-2">
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>ร้านอาหารญี่ปุ่น</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>เบเกอรี่</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>คาเฟ่แคท</li>
+                        </ul>
+                    </div>
+                    <div class="glass-effect rounded-xl p-5 hover:bg-white hover:bg-opacity-15 transition-all duration-300">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-500 bg-opacity-30 p-2 rounded-lg mr-3">
+                                <i class="fas fa-briefcase text-2xl"></i>
+                            </div>
+                            <h4 class="font-bold text-lg">บริการมืออาชีพ</h4>
+                        </div>
+                        <ul class="text-sm space-y-2 opacity-90 ml-2">
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>สำนักงานกฎหมาย</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>บริษัทบัญชี</li>
+                            <li><i class="fas fa-star text-yellow-400 mr-2 text-xs"></i>คอนซัลติ้ง</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-8 mt-auto relative z-10">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <i class="fas fa-robot text-4xl text-purple-400 mb-3"></i>
+                </div>
+                <p class="text-base font-medium mb-2">
+                    © 2025 บริษัท เอไอ อันล็อก อินโนเวชั่น จำกัด
+                </p>
+                <p class="text-sm opacity-75">
+                    <i class="fas fa-bolt mr-1 text-yellow-400"></i>
+                    Powered by AI Unlocked Technology
+                </p>
+                <div class="mt-4 flex justify-center space-x-6 text-xl">
+                    <a href="https://www.facebook.com/aiunlockedvip" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@AIUnlocked168" target="_blank" class="text-red-400 hover:text-red-300 transition-colors">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://selljung.com/" target="_blank" class="text-green-400 hover:text-green-300 transition-colors">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="keywords.js"></script>
+</body>
+</html>
