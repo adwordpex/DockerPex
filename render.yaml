@@ -1,7 +1,7 @@
 services:
   - type: web
     name: lead-scraper
-    env: node
+    runtime: node
     buildCommand: npm install
     startCommand: npm start
     envVars:
