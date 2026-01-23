@@ -22,3 +22,23 @@
     "nodemon": "^3.0.1"
   }
 }
+{
+  "name": "ชื่อโปรเจกต์ของคุณ",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npx playwright install --with-deps chromium",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    ...
+  }
+}
+```
+
+4. Commit & Push
+5. Render จะ auto-deploy ใหม่
+
+**แนะนำให้ใช้วิธีที่ 1 ก่อน** เพราะเร็วกว่า แค่ไปแก้ Build Command ใน Render Settings เป็น:
+```
+npm install && npx playwright install --with-deps chromium
